@@ -3,7 +3,8 @@
   "version": "1.0.0",
 	"type": "module",
   "description": "frontend-project-lvl2",
-  "main": "index.js",
+  "main": "src/index.js.js",
+	"bin": "bin/gendiff.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
