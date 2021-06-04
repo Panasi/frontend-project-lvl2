@@ -7,7 +7,7 @@ on:
 jobs:
   # Set the job key. The key is displayed as the job name
   # when a job name is not provided
-  make-lint:
+  make-lint-jest:
     # Name the Job
     name: Runs linter and Jest
     # Set the type of machine to run on
