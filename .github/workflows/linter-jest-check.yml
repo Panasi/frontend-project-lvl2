@@ -38,3 +38,13 @@ jobs:
       - name: Run Jest
         run: |
           make test
+      - name: Test & publish code coverage
+        # Publish code coverage on Code Climate
+        # https://github.com/paambaati/codeclimate-action
+        uses: paambaati/codeclimate-action@v2.7.4
+        # Add Code Climate secret key
+        env:
+          PANASI_SECRET: ${{ secrets.PANASI_SECRET }}
+        with:
+          coverageCommand: make test-coverage
+          debug: true
