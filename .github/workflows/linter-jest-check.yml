@@ -28,16 +28,18 @@ jobs:
       - name: install dependencies
         run: |
           make install
- 
+      # Add environment variables
+        env:
+          CI: true
       # Runs the Super-Linter action
       - name: Run Linter
         run: |
           make lint
-          
       # Runs Jest tests
       - name: Run Jest
         run: |
           make test
+      # Test Coverage
       - name: Test & publish code coverage
         # Publish code coverage on Code Climate
         # https://github.com/paambaati/codeclimate-action
