@@ -46,7 +46,7 @@ jobs:
         uses: paambaati/codeclimate-action@v2.7.4
         # Add Code Climate secret key
         env:
-          PANASI_SECRET: ${{ secrets.PANASI_SECRET }}
+          CC_TEST_REPORTER_ID: ${{ secrets.PANASI_SECRET }}
         with:
           coverageCommand: make test-coverage
           debug: true
