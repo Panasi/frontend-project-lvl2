@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 import { Command } from 'commander/esm.mjs';
 import gendiff from '../index.js';
 
