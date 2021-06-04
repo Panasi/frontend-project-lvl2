@@ -37,4 +37,4 @@ jobs:
       # Runs Jest tests
       - name: Run Jest
         run: |
-          make jest
+          make test
