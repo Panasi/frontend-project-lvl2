@@ -8,8 +8,7 @@
     "gendiff": "bin/gendiff.js"
   },
   "scripts": {
-    "test": "npx jest --bail",
-    "test-watch": "npx jest --bail --watchAll"
+    "test": "npx jest --bail"
   },
   "repository": {
     "type": "git",
@@ -26,6 +25,7 @@
   "homepage": "https://github.com/Panasi/frontend-project-lvl2#readme",
   "dependencies": {
     "commander": "^7.2.0",
+    "js-yaml": "^3.14.1",
     "lodash": "^4.17.21"
   },
   "devDependencies": {

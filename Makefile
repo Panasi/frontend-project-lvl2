@@ -11,7 +11,7 @@ test:
 	npm test
 
 test-watch:
-	npm run test-watch
+	npm test -- --watchAll
 
 test-coverage:
 	npm test -- --coverage --coverageProvider=v8
