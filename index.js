@@ -1,14 +1,9 @@
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
-import { cwd } from 'process';
 import _ from 'lodash';
-import dataToObject from './src/parsers.js';
+import fileToObject from './src/parsers.js';
 
 const gendiff = (filePath1, filePath2) => {
-  const data1 = readFileSync(resolve(cwd(), filePath1));
-  const data2 = readFileSync(resolve(cwd(), filePath2));
-  const obj1 = dataToObject(filePath1, data1);
-  const obj2 = dataToObject(filePath2, data2);
+  const obj1 = fileToObject(filePath1);
+  const obj2 = fileToObject(filePath2);
   const keys1 = Object.keys(obj1);
   const keys2 = Object.keys(obj2);
   const allKeys = [...keys1, ...keys2];

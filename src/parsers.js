@@ -1,7 +1,10 @@
-import { extname } from 'path';
+import { readFileSync } from 'fs';
+import { extname, resolve } from 'path';
+import { cwd } from 'process';
 import yaml from 'js-yaml';
 
-const dataToObject = (filePath, data) => {
+const fileToObject = (filePath) => {
+  const data = readFileSync(resolve(cwd(), filePath));
   if (extname(filePath) === '.json') {
     const obj = JSON.parse(data);
     return obj;
@@ -12,4 +15,4 @@ const dataToObject = (filePath, data) => {
   }
   return data;
 };
-export default dataToObject;
+export default fileToObject;
