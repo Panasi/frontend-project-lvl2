@@ -1,30 +1,39 @@
 import _ from 'lodash';
-import fileToObject from './src/parsers.js';
+import getFileData from './src/parsers.js';
+import StylishFormatter from './src/formatters/stylish.js';
 
-const gendiff = (filePath1, filePath2) => {
-  const obj1 = fileToObject(filePath1);
-  const obj2 = fileToObject(filePath2);
-  const keys1 = Object.keys(obj1);
-  const keys2 = Object.keys(obj2);
-  const allKeys = [...keys1, ...keys2];
-  const uniqSortedKeys = _.uniq(allKeys).sort();
-  const diff = uniqSortedKeys.map((item) => {
-    if (_.has(obj1, item) && _.has(obj2, item)) {
-      if (obj1[item] === obj2[item]) {
-        return `\n    ${item}: ${obj1[item]}`;
+const gendiff = (filePath1, filePath2, format = 'stylish') => {
+  const data1 = getFileData(filePath1);
+  const data2 = getFileData(filePath2);
+  const getDiff = (obj1, obj2) => {
+    const overallKeys = [...Object.keys(obj1), ...Object.keys(obj2)];
+    const uniqSortedKeys = _.uniq(overallKeys).sort();
+    const result = uniqSortedKeys.map((key) => {
+      if (!_.has(obj1, key)) {
+        return { name: key, type: 'added', value: obj2[key] };
       }
-      return `\n  - ${item}: ${obj1[item]}\n  + ${item}: ${obj2[item]}`;
-    }
-    if (!(_.has(obj1, item))) {
-      return `\n  + ${item}: ${obj2[item]}`;
-    }
-    if (!(_.has(obj2, item))) {
-      return `\n  - ${item}: ${obj1[item]}`;
-    }
-    return item;
-  });
-  diff.unshift('{');
-  diff.push('\n}');
-  return diff.join('');
+      if (!_.has(obj2, key)) {
+        return { name: key, type: 'deleted', value: obj1[key] };
+      }
+      if (_.isObject(obj1[key]) && _.isObject(obj2[key])) {
+        return { name: key, type: 'common', children: getDiff(obj1[key], obj2[key]) };
+      }
+      if ((typeof obj1[key] !== typeof obj2[key]) || (obj1[key] !== obj2[key])) {
+        return {
+          name: key,
+          type: 'changed',
+          valueBefore: obj1[key],
+          valueAfter: obj2[key],
+        };
+      }
+      return { name: key, type: 'unchangeable', value: obj1[key] };
+    });
+    return result;
+  };
+  const diffData = getDiff(data1, data2);
+  if (format === 'stylish') {
+    return StylishFormatter(diffData);
+  }
+  return StylishFormatter(diffData);
 };
 export default gendiff;
