@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import getFileData from './src/parsers.js';
-import StylishFormatter from './src/formatters/stylish.js';
+import formatter from './src/formatters/index.js';
 
 const gendiff = (filePath1, filePath2, format = 'stylish') => {
   const data1 = getFileData(filePath1);
@@ -13,7 +13,7 @@ const gendiff = (filePath1, filePath2, format = 'stylish') => {
         return { name: key, type: 'added', value: obj2[key] };
       }
       if (!_.has(obj2, key)) {
-        return { name: key, type: 'deleted', value: obj1[key] };
+        return { name: key, type: 'removed', value: obj1[key] };
       }
       if (_.isObject(obj1[key]) && _.isObject(obj2[key])) {
         return { name: key, type: 'common', children: getDiff(obj1[key], obj2[key]) };
@@ -31,9 +31,6 @@ const gendiff = (filePath1, filePath2, format = 'stylish') => {
     return result;
   };
   const diffData = getDiff(data1, data2);
-  if (format === 'stylish') {
-    return StylishFormatter(diffData);
-  }
-  return StylishFormatter(diffData);
+  return formatter(diffData, format);
 };
 export default gendiff;
