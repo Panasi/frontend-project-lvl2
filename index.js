@@ -7,8 +7,8 @@ const gendiff = (filePath1, filePath2, format = 'stylish') => {
   const data2 = getFileData(filePath2);
   const getDiff = (obj1, obj2) => {
     const overallKeys = [...Object.keys(obj1), ...Object.keys(obj2)];
-    const uniqSortedKeys = _.uniq(overallKeys).sort();
-    const result = uniqSortedKeys.map((key) => {
+    const uniqKeys = _.uniq(overallKeys);
+    const result = uniqKeys.map((key) => {
       if (!_.has(obj1, key)) {
         return { name: key, type: 'added', value: obj2[key] };
       }
@@ -28,7 +28,7 @@ const gendiff = (filePath1, filePath2, format = 'stylish') => {
       }
       return { name: key, type: 'unchangeable', value: obj1[key] };
     });
-    return result;
+    return _.sortBy(result, 'name');
   };
   const diffData = getDiff(data1, data2);
   return formatter(diffData, format);
