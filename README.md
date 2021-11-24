@@ -43,6 +43,6 @@ Arguments:
 
 Optional arguments:
   -h, --help           Show help message and exit.
-  -v, --version        Show program's version number and exit.
+  -V, --version        Show program's version number and exit.
   -f, --format [type]  Selection of the output format. Those format types are available: stylish, plain, json. The default format is stylish.
 ```
