@@ -41,6 +41,7 @@ jobs:
           make test
       # Test Coverage
       - name: Test & publish code coverage
+        uses: paambaati/codeclimate-action@v2.7.5
         # Add Code Climate secret key
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.PANASI_SECRET }}
